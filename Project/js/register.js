@@ -1,0 +1,90 @@
+document
+    .getElementById("registerForm")
+    .addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword =
+    document.getElementById("confirmPassword").value;
+
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const confirmPasswordError = document.getElementById(
+    "confirmPasswordError"
+    );
+    const registerError = document.getElementById("registerError");
+
+    // Reset all error messages
+    nameError.style.display = "none";
+    nameError.textContent = "";
+    emailError.style.display = "none";
+    emailError.textContent = "";
+    passwordError.style.display = "none";
+    passwordError.textContent = "";
+    confirmPasswordError.style.display = "none";
+    confirmPasswordError.textContent = "";
+    registerError.style.display = "none";
+    registerError.textContent = "";
+
+    // Validate name
+    if (!name) {
+    nameError.textContent = "Vui lòng nhập họ tên";
+    nameError.style.display = "block";
+    return;
+    }
+
+    // Validate email
+    if (!email) {
+    emailError.textContent = "Vui lòng nhập email";
+    emailError.style.display = "block";
+    return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+    emailError.textContent = "Email không đúng định dạng";
+    emailError.style.display = "block";
+    return;
+    }
+
+    // Validate password
+    if (!password) {
+    passwordError.textContent = "Vui lòng nhập mật khẩu";
+    passwordError.style.display = "block";
+    return;
+    }
+
+    if (password.length < 8) {
+    passwordError.textContent = "Mật khẩu phải có ít nhất 8 ký tự";
+    passwordError.style.display = "block";
+    return;
+    }
+
+    // Validate confirm password
+    if (!confirmPassword) {
+    confirmPasswordError.textContent = "Vui lòng xác nhận mật khẩu";
+    confirmPasswordError.style.display = "block";
+    return;
+    }
+
+    if (password !== confirmPassword) {
+    confirmPasswordError.textContent = "Mật khẩu xác nhận không khớp";
+    confirmPasswordError.style.display = "block";
+    return;
+    }
+
+    // Check registration
+    if (
+    typeof register === "function" &&
+    register(email, password, name)
+    ) {
+    alert("Đăng ký thành công! Vui lòng đăng nhập.");
+    window.location.href = "./login.html";
+    } else {
+    registerError.textContent = "Email đã tồn tại";
+    registerError.style.display = "block";
+    }
+    });
